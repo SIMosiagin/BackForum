@@ -1,7 +1,7 @@
-package demo.Service;
+package demo.service;
 
-import demo.Service.Interfaces.UserService;
-import demo.model.MyUser;
+import demo.service.interfaces.RolesService;
+import demo.service.interfaces.UserService;
 import demo.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -19,6 +19,9 @@ public class CustomUserDetailService implements UserDetailsService {
     UserService userService;
 
     @Autowired
+    RolesService rolesService;
+
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -27,15 +30,9 @@ public class CustomUserDetailService implements UserDetailsService {
         return new User(myUser.getNickName(),myUser.getPass(), AuthorityUtils.createAuthorityList(myUser.getRole().getRoleName()));
     }
 
-    public MyUser loadMyUserByUsername(String name){
-        Users user = userService.getUserByNickName(name);
-
-        MyUser u2 =  new MyUser();
-        u2.setPass(user.getPass());
-        u2.setName(user.getNickName());
-        u2.setRole("ROLE_USER");
 
 
-        return u2;
+    public Users loadMyUserByUsername(String name){
+        return userService.getUserByNickName(name);
     }
 }

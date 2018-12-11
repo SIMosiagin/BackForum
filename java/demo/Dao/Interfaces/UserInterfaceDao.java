@@ -1,4 +1,4 @@
-package demo.Dao.Interfaces;
+package demo.dao.interfaces;
 
 import demo.model.Users;
 

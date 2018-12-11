@@ -1,9 +1,8 @@
-package demo.SecurityConfig;
+package demo.securityConfig;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import demo.model.MyUser;
 import demo.model.Users;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +21,7 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-import static demo.SecurityConfig.SecConstant.*;
+import static demo.securityConfig.SecConstant.*;
 
 public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
 

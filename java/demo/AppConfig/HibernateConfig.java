@@ -1,4 +1,4 @@
-package demo.AppConfig;
+package demo.appConfig;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

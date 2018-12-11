@@ -1,15 +1,12 @@
-package demo.SecurityConfig;
+package demo.securityConfig;
 
 import io.jsonwebtoken.Jwts;
-import demo.Service.CustomUserDetailService;
-import demo.model.MyUser;
+import demo.service.CustomUserDetailService;
 import demo.model.Users;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -18,9 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static demo.SecurityConfig.SecConstant.HEADER_STRING;
-import static demo.SecurityConfig.SecConstant.SECRET;
-import static demo.SecurityConfig.SecConstant.TOKEN_PREFIX;
+import static demo.securityConfig.SecConstant.HEADER_STRING;
+import static demo.securityConfig.SecConstant.SECRET;
+import static demo.securityConfig.SecConstant.TOKEN_PREFIX;
 
 public class JWTAuthzFilter  extends BasicAuthenticationFilter{
 
@@ -52,10 +49,10 @@ public class JWTAuthzFilter  extends BasicAuthenticationFilter{
                 .getBody()
                 .getSubject();
 
-        UserDetails userDetails = customUserDetailService.loadUserByUsername(name);
-        MyUser user = customUserDetailService.loadMyUserByUsername(name);
+        //UserDetails userDetails = customUserDetailService.loadUserByUsername(name);
+        Users user = customUserDetailService.loadMyUserByUsername(name);
 
-        return name !=null ? new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()) : null;
+        return name !=null ? new UsernamePasswordAuthenticationToken(user, null, AuthorityUtils.createAuthorityList(user.getRole().getRoleName())) : null;
 
     }
 }

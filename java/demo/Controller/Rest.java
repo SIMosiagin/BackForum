@@ -1,12 +1,13 @@
-package demo.Controller;
+package demo.controller;
 
 
-import demo.Service.Interfaces.RolesService;
-import demo.Service.Interfaces.UserService;
+import demo.service.interfaces.PostService;
+import demo.service.interfaces.RolesService;
+import demo.service.interfaces.TopicService;
+import demo.service.interfaces.UserService;
 import demo.model.Roles;
 import demo.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/floor1")
 public class Rest {
 
     @Autowired
@@ -23,6 +23,12 @@ public class Rest {
 
     @Autowired
     RolesService rolesService;
+
+    @Autowired
+    PostService postService;
+
+    @Autowired
+    TopicService topicService;
 
     @GetMapping("office1")
     public String enterOfficeOne (){
@@ -39,18 +45,16 @@ public class Rest {
     @RequestMapping(name = "/testOne", method = RequestMethod.GET)
     public void doTest(){
         Users users = new Users();
-        users.setNickName("someUser");
-        users.setPass("pass");
-        users.setId(1);
+        users.setNickName("zxczxc");
+        users.setPass("asdas");
 
-        Roles roles = new Roles();
-        roles.setRoleName("ROLE_USER");
-        roles.setId(1);
-        rolesService.saveOrUpdateIfExist(roles);
+        Roles roles = rolesService.getRoleByName("ROLE_USER");
 
         users.setRole(roles);
         userService.saveOrUpdateIfExist(users);
         System.out.println("done user");
 
     }
+
+    
 }

@@ -1,7 +1,7 @@
-package demo.Dao.Implementation;
+package demo.dao.implementation;
 
 
-import demo.Dao.Interfaces.RolesInterfaceDao;
+import demo.dao.interfaces.RolesInterfaceDao;
 import demo.model.Roles;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +22,13 @@ public class RolesDao extends AbstractDao implements RolesInterfaceDao {
     public List<Roles> selectAllRoles (){
         List<Roles> roles = getSession().createQuery("From Roles").list();
         return  roles;
+    }
+
+    public Roles getRoleByName(String name){
+        Roles role = getSession().createQuery("From Roles Where rolename = :name", Roles.class)
+                .setParameter("name", name)
+                .getSingleResult();
+        return role;
     }
 
     public void delete (Roles role){

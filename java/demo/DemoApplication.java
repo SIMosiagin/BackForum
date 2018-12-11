@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@SpringBootApplication//(exclude = {HibernateJpaAutoConfiguration.class })
+@SpringBootApplication(exclude = {HibernateJpaAutoConfiguration.class })
 public class DemoApplication {
 
 	public static void main(String[] args) {

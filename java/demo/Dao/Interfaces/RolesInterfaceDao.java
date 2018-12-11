@@ -1,4 +1,4 @@
-package demo.Dao.Interfaces;
+package demo.dao.interfaces;
 
 import demo.model.Roles;
 
@@ -11,6 +11,8 @@ public interface RolesInterfaceDao {
     public void saveOrUpdateIfExist(Roles role);
 
     public List<Roles> selectAllRoles();
+
+    public Roles getRoleByName(String name);
 
     public void delete(Roles role);
 }

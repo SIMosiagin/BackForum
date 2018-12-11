@@ -1,15 +1,10 @@
-package demo.Service.Implementation;
+package demo.service.implementation;
 
 
-import demo.Dao.Interfaces.UserInterfaceDao;
-import demo.Service.Interfaces.UserService;
+import demo.dao.interfaces.UserInterfaceDao;
+import demo.service.interfaces.UserService;
 import demo.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package demo.Service.Interfaces;
+package demo.service.interfaces;
 
 
 import demo.model.Users;

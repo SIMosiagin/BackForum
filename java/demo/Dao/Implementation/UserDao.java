@@ -1,7 +1,7 @@
-package demo.Dao.Implementation;
+package demo.dao.implementation;
 
 
-import demo.Dao.Interfaces.UserInterfaceDao;
+import demo.dao.interfaces.UserInterfaceDao;
 import demo.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,12 +16,10 @@ public class UserDao extends AbstractDao implements UserInterfaceDao {
     BCryptPasswordEncoder encoder;
 
     public void save(Users user){
-        user.setPass(encoder.encode(user.getPass()));
         persist(user);
     }
 
     public void saveOrUpdateIfExist(Users user){
-        user.setPass(encoder.encode(user.getPass()));
         saveOrUpdate(user);
     }
 

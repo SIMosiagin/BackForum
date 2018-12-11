@@ -1,8 +1,8 @@
-package demo.Service.Implementation;
+package demo.service.implementation;
 
 
-import demo.Dao.Interfaces.RolesInterfaceDao;
-import demo.Service.Interfaces.RolesService;
+import demo.dao.interfaces.RolesInterfaceDao;
+import demo.service.interfaces.RolesService;
 import demo.model.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +31,9 @@ public class RolesServiceImpl implements RolesService {
 
     public void delete(Roles role) {
         rolesInterfaceDao.delete(role);
+    }
+
+    public Roles getRoleByName(String name){
+        return rolesInterfaceDao.getRoleByName(name);
     }
 }

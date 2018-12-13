@@ -24,9 +24,10 @@ public class SecConf extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/sign_up").permitAll()
-                .antMatchers("/*/floor1/**").hasRole("USER")
-                .antMatchers("/*/floor2/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/signup").permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers("/*/forum/**").hasRole("USER")
+                .antMatchers("/*/forum/**").hasRole("ADMIN")
                 .and()
                 .addFilter(new JWTAuthFilter(authenticationManager()))
                 .addFilter(new JWTAuthzFilter(authenticationManager(),customUserDetailService));

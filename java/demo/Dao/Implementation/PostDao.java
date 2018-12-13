@@ -23,7 +23,8 @@ public class PostDao extends AbstractDao implements PostInterfaceDao {
     }
 
     public List<Post> getPostsByTopic (Integer topicId){
-        List<Post> posts = getSession().createQuery("From Post").setParameter("topic_id", topicId).list();
+        List<Post> posts = getSession().createQuery("From Post Where topic_id = :id")
+                .setParameter("id", topicId).list();
         return  posts;
     }
 

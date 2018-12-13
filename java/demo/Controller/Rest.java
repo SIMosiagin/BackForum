@@ -1,6 +1,8 @@
 package demo.controller;
 
 
+import demo.model.Post;
+import demo.model.Topic;
 import demo.service.interfaces.PostService;
 import demo.service.interfaces.RolesService;
 import demo.service.interfaces.TopicService;
@@ -10,12 +12,13 @@ import demo.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 public class Rest {
 
     @Autowired
@@ -30,31 +33,55 @@ public class Rest {
     @Autowired
     TopicService topicService;
 
-    @GetMapping("office1")
-    public String enterOfficeOne (){
-        System.out.println(SecurityContextHolder.getContext().getAuthentication());
-        return ("you are inside enterOfficeOne");
+
+    @RequestMapping(value = "/signup",method = RequestMethod.POST)
+    public Users signUpNewUser(@RequestBody Users user){
+        userService.saveOrUpdateIfExist(user);
+        return user;
     }
 
-    @GetMapping("office2")
+    @PreAuthorize("hasAnyRole('USER')")
+    @RequestMapping(value = "/forum/getAllTopic", method = RequestMethod.GET)
+    public List<Topic> getAllTopic (){
+        return topicService.selectAllPosts();
+    }
+
+    @RequestMapping(value = "/forum/getPostsByTopic", method = RequestMethod.POST)
+    public List<Post> getPostsByTopic(@RequestBody  Topic topic){
+        return postService.getPostsByTopic(topic.getId());
+    }
+
+    @RequestMapping(value = "/forum/saveTopic", method = RequestMethod.PUT)
+    public List<Topic> saveTopic (@RequestBody Topic topic) {
+        topicService.saveOrUpdateIfExist(topic);
+        return topicService.selectAllPosts();
+    }
+
+    @RequestMapping(value = "/forum/savePost", method = RequestMethod.PUT)
+    public List<Post> savePost (@RequestBody Post post) {
+        postService.saveOrUpdateIfExist(post);
+        return postService.getPostsByTopic(post.getTopic().getId());
+    }
+
+    @RequestMapping(value = "/forum/editUser", method = RequestMethod.PUT)
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public String enterOfficeTwo (){
-        return ("you are inside enterOfficeTwo");
+    public List<Users> editUser(@RequestBody Users user){
+        userService.saveOrUpdateIfExist(user);
+        return userService.selectAllUser();
     }
 
-    @RequestMapping(name = "/testOne", method = RequestMethod.GET)
-    public void doTest(){
-        Users users = new Users();
-        users.setNickName("zxczxc");
-        users.setPass("asdas");
-
-        Roles roles = rolesService.getRoleByName("ROLE_USER");
-
-        users.setRole(roles);
-        userService.saveOrUpdateIfExist(users);
-        System.out.println("done user");
-
+    @RequestMapping(value = "/forum/getAllUsers", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public List<Users> getUsers(){
+        return userService.selectAllUser();
     }
 
-    
+    @RequestMapping(value = "/forum/getUser", method = RequestMethod.POST)
+    public Users getUser(@RequestBody String nickName){
+        return userService.getUserByNickName(nickName);
+    }
+
+
+
+
 }

@@ -1,0 +1,45 @@
+
+CREATE TABLE IF NOT EXISTS Roles(
+   id serial PRIMARY KEY,
+   roleName VARCHAR(255)
+ );
+
+ CREATE TABLE IF NOT EXISTS Users(
+    id serial PRIMARY KEY,
+    nickName VARCHAR(255),
+    email  VARCHAR(255),
+    pass  VARCHAR(255),
+    salt  CHAR(11),
+    role_id INT, FOREIGN KEY (role_id) REFERENCES Roles(id)
+  );
+
+ CREATE TABLE IF NOT EXISTS Topic(
+     id serial PRIMARY KEY,
+     name VARCHAR(255),
+     update_date date
+ );
+
+ CREATE TABLE IF NOT EXISTS Post(
+     id serial PRIMARY KEY,
+     text TEXT,
+     create_date date,
+     topic_id INT, FOREIGN KEY (topic_id) REFERENCES Topic(id),
+     user_id INT, FOREIGN KEY (user_id) REFERENCES Users(id)
+ );
+
+ INSERT INTO Roles (id, roleName)
+    values ('0', 'admin');
+ INSERT INTO Roles (id, roleName)
+    values ('1', 'user');
+ INSERT INTO Roles (id, roleName)
+    values ('2', 'guest');
+
+
+ INSERT INTO Users (nickName, pass, role_id)
+     values ('SomeUser', '123', '1');
+
+ INSERT INTO Users (nickName, pass, role_id)
+     values ('admin', 'adminPass', '0');
+
+
+

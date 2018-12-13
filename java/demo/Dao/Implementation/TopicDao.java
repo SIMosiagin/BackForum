@@ -1,13 +1,14 @@
 package demo.dao.implementation;
 
-import com.SomeSite.Dao.Interfaces.TopicInterfaceDao;
-import com.SomeSite.Entity.Topic;
+
+import demo.dao.interfaces.TopicInterfaceDao;
+import demo.model.Topic;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository("TopicInterfaceDao")
-public class TopicDao extends  AbstractDao implements TopicInterfaceDao{
+public class TopicDao extends  AbstractDao implements TopicInterfaceDao {
 
     public void save(Topic topic){
         persist(topic);
